@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>hello</title>
+</head>
+<body>
+<p>u1</p>
+<p>hello {{ .u1.Name }}</p>
+<p>年龄： {{ .u1.Age }}</p>
+<p>性别：{{ .u1.Gender }}</p>
+
+<p>m1</p>
+<p>hello {{ .m1.name }}</p>
+<p>年龄： {{ .m1.age }}</p>
+<p>性别：{{ .m1.gender }}</p>
+
+{{/* 这里是注释 */}}
+<hr>
+{{ $v1 := 0}}
+{{ $age := .u1.Age }}
+
+<hr>
+{{ if $v1 }}
+{{ $v1 }}
+{{else}}
+啥都没有
+{{end}}
+
+<hr>
+{{ if lt .u1.Age 18}}
+好好上学
+{{else}}
+好好工作
+{{end}}
+
+<hr>
+{{ range $idx, $hobby := .hobby }}
+    <p>{{$idx}} -- {{$hobby}}</p>
+{{else}}
+    没啥爱好
+{{end}}
+
+<hr>
+<p>m1</p>
+{{/* with代替.m1，默认使用.m1，写起来更简单 */}}
+{{ with .m1 }}
+<p>{{ .name }}</p>
+<p>{{ .age }}</p>
+<p>{{ .gender }}</p>
+{{end}}
+
+<hr>
+{{/* 取索引值 */}}
+{{ index .hobby 2}}
+
+</body>
+</html>
