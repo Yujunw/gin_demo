@@ -51,12 +51,11 @@ func xss(w http.ResponseWriter, r *http.Request) {
 func xss2(w http.ResponseWriter, r *http.Request) {
 	// 定义模板
 	// 解析模板之前自定义一个函数safe，表示不需要转义
-	template.New("xss.tmpl").Funcs(template.FuncMap{
+	t, err := template.New("xss.tmpl").Funcs(template.FuncMap{
 		"safe": func(str string) template.HTML {
 			return template.HTML(str)
 		},
-	})
-	t, err := template.ParseFiles("./xss.tmpl")
+	}).ParseFiles("./xss.tmpl")
 	if err != nil {
 		log.Printf("template.ParseFiles failed, %v", err)
 		return
@@ -72,7 +71,7 @@ func xss2(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/index", index)
-	http.HandleFunc("/xss", xss)
+	http.HandleFunc("/xss", xss2)
 
 	err := http.ListenAndServe(":9000", nil)
 	if err != nil {
