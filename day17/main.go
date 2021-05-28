@@ -58,6 +58,12 @@ func main() {
 		videoGroup.GET("/oo", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"path": "/video/oo"})
 		})
+
+		// 嵌套路由组
+		gameVideo := videoGroup.Group("/game")
+		gameVideo.GET("/lol", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{"path": "/video/game/lol"})
+		})
 	}
 
 	r.Run(":9000")
